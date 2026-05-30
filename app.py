@@ -9,88 +9,111 @@ st.set_page_config(
 
 custom_css = """
 <style>
-html, body, [class*="css"] {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #1d1d1f;
-    background-color: #ffffff;
+[data-testid="stAppViewContainer"], .stApp {
+    background-color: #ffffff !important;
+}
+
+[data-testid="stHeader"] {
+    background-color: transparent !important;
+}
+
+[data-testid="stBlockContainer"] {
+    max-width: 900px !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+p, span, label, h1, h2, h3, h4, h5, h6, div, li {
+    color: #1d1d1f !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
-header {visibility: hidden;}
 
 .main-title {
-    font-size: 2.5rem;
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     text-align: center;
     margin-bottom: 0.5rem;
-    margin-top: 1rem;
 }
 
 .sub-title {
     font-size: 1.1rem;
     font-weight: 400;
-    color: #86868b;
+    color: #86868b !important;
     text-align: center;
     margin-bottom: 3.5rem;
-    line-height: 1.5;
 }
 
 .section-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    color: #1d1d1f;
-    margin-bottom: 1.2rem;
-    border-bottom: 1px solid #d2d2d7;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e5e5ea;
     padding-bottom: 0.5rem;
 }
 
-div[data-baseweb="select"] > div, input[type="number"] {
+[data-baseweb="select"] > div,
+[data-baseweb="base-input"],
+input[type="number"] {
+    background-color: #f5f5f7 !important;
     border-radius: 12px !important;
-    background-color: #fbfbfd !important;
-    border: 1px solid #d2d2d7 !important;
+    border: 1px solid transparent !important;
     padding: 2px;
+    transition: all 0.2s ease;
 }
 
-.stButton > button {
-    background-color: #0071e3;
-    color: white;
-    border-radius: 980px;
-    padding: 14px 24px;
-    font-weight: 500;
-    font-size: 17px;
-    border: none;
-    width: 100%;
-    transition: background-color 0.3s ease;
-    margin-top: 1rem;
+[data-baseweb="select"] > div:hover,
+[data-baseweb="base-input"]:hover {
+    border: 1px solid #d2d2d7 !important;
 }
 
-.stButton > button:hover {
-    background-color: #0077ed;
+[data-baseweb="popover"] {
+    background-color: #ffffff !important;
+}
+
+[data-testid="baseButton-secondary"] {
+    background-color: #0071e3 !important;
+    border-radius: 980px !important;
+    padding: 0.8rem !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    border: none !important;
+    width: 100% !important;
+    margin-top: 1.5rem !important;
+    transition: background-color 0.3s ease, transform 0.1s ease !important;
+}
+
+[data-testid="baseButton-secondary"]:hover {
+    background-color: #0077ed !important;
+    transform: scale(1.02);
+}
+
+[data-testid="baseButton-secondary"] * {
+    color: #ffffff !important;
 }
 
 .result-box {
-    background-color: #fbfbfd;
+    background-color: #f5f5f7;
     border-radius: 20px;
     padding: 2.5rem;
     text-align: center;
-    margin-top: 2.5rem;
-    border: 1px solid #d2d2d7;
+    margin-top: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
 }
 
 .result-text {
     font-size: 2.2rem;
     font-weight: 600;
-    color: #1d1d1f;
-    letter-spacing: -0.01em;
 }
 
 .result-note {
     font-size: 0.95rem;
-    color: #86868b;
+    color: #86868b !important;
     margin-top: 0.8rem;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 </style>
 """
@@ -99,8 +122,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 header_html = """
 <div class="main-title">Estimasi Rawat Inap</div>
-<div class="sub-title">Prediksi durasi perawatan klinis pasien demam berdarah menggunakan 
-arsitektur Stacking Regression.</div>
+<div class="sub-title">Prediksi durasi perawatan klinis pasien demam berdarah menggunakan arsitektur Stacking Regression.</div>
 """
 st.markdown(header_html, unsafe_allow_html=True)
 
@@ -169,8 +191,7 @@ if st.button("Proses Analisis"):
         result_html = f"""
         <div class="result-box">
             <div class="result-text">Estimasi: {prediksi_hari} Hari</div>
-            <div class="result-note">Hasil diprediksi dengan margin of error (MAD) ± 1.5 hari. 
-            Gunakan sebagai referensi sekunder.</div>
+            <div class="result-note">Hasil diprediksi dengan margin of error (MAD) ± 1.5 hari. Gunakan sebagai referensi sekunder.</div>
         </div>
         """
         st.markdown(result_html, unsafe_allow_html=True)

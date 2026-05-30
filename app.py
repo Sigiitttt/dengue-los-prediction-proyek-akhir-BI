@@ -4,115 +4,113 @@ import joblib
 
 st.set_page_config(
     page_title="Prediksi LOS DBD",
-    layout="centered"
+    layout="centered",
+    initial_sidebar_state="collapsed"
 )
 
 custom_css = """
 <style>
-[data-testid="stAppViewContainer"], .stApp {
-    background-color: #ffffff !important;
+[data-testid="stAppViewContainer"] {
+    background-color: #F5F5F7 !important;
 }
 
 [data-testid="stHeader"] {
-    background-color: transparent !important;
+    background: transparent !important;
 }
 
 [data-testid="stBlockContainer"] {
-    max-width: 900px !important;
+    max-width: 760px !important;
     padding-top: 3rem !important;
     padding-bottom: 3rem !important;
 }
 
-p, span, label, h1, h2, h3, h4, h5, h6, div, li {
-    color: #1d1d1f !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+p, span, label, h1, h2, h3, h4, div, li {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    color: #1D1D1F !important;
 }
 
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-
 .main-title {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     text-align: center;
     margin-bottom: 0.5rem;
 }
 
 .sub-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 400;
-    color: #86868b !important;
+    color: #86868B !important;
     text-align: center;
     margin-bottom: 3.5rem;
+    line-height: 1.5;
 }
 
 .section-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid #e5e5ea;
+    margin-bottom: 1.2rem;
     padding-bottom: 0.5rem;
+    border-bottom: 1px solid #D2D2D7;
 }
 
 [data-baseweb="select"] > div,
 [data-baseweb="base-input"],
 input[type="number"] {
-    background-color: #f5f5f7 !important;
-    border-radius: 12px !important;
-    border: 1px solid transparent !important;
-    padding: 2px;
-    transition: all 0.2s ease;
+    background-color: #FFFFFF !important;
+    border: 1px solid #D2D2D7 !important;
+    border-radius: 8px !important;
+    padding: 3px 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
 }
 
-[data-baseweb="select"] > div:hover,
-[data-baseweb="base-input"]:hover {
-    border: 1px solid #d2d2d7 !important;
-}
-
-[data-baseweb="popover"] {
-    background-color: #ffffff !important;
+[data-testid="stSelectbox"] label,
+[data-testid="stNumberInput"] label {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.5rem !important;
 }
 
 [data-testid="baseButton-secondary"] {
-    background-color: #0071e3 !important;
-    border-radius: 980px !important;
-    padding: 0.8rem !important;
-    font-weight: 600 !important;
-    font-size: 1.1rem !important;
+    background-color: #1D1D1F !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
     border: none !important;
     width: 100% !important;
     margin-top: 1.5rem !important;
-    transition: background-color 0.3s ease, transform 0.1s ease !important;
+    transition: opacity 0.2s ease !important;
 }
 
 [data-testid="baseButton-secondary"]:hover {
-    background-color: #0077ed !important;
-    transform: scale(1.02);
+    opacity: 0.8 !important;
 }
 
-[data-testid="baseButton-secondary"] * {
-    color: #ffffff !important;
+[data-testid="baseButton-secondary"] p {
+    color: #FFFFFF !important;
 }
 
 .result-box {
-    background-color: #f5f5f7;
-    border-radius: 20px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
     padding: 2.5rem;
     text-align: center;
-    margin-top: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    margin-top: 2.5rem;
+    border: 1px solid #E5E5EA;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
 }
 
 .result-text {
     font-size: 2.2rem;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .result-note {
     font-size: 0.95rem;
-    color: #86868b !important;
-    margin-top: 0.8rem;
+    color: #86868B !important;
+    margin-top: 1rem;
     line-height: 1.5;
 }
 </style>
@@ -120,10 +118,11 @@ input[type="number"] {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
-header_html = """
-<div class="main-title">Estimasi Rawat Inap</div>
-<div class="sub-title">Prediksi durasi perawatan klinis pasien demam berdarah menggunakan arsitektur Stacking Regression.</div>
-"""
+header_html = (
+    '<div class="main-title">Estimasi Rawat Inap</div>'
+    '<div class="sub-title">Prediksi durasi perawatan klinis pasien demam '
+    'berdarah menggunakan arsitektur Stacking Regression.</div>'
+)
 st.markdown(header_html, unsafe_allow_html=True)
 
 col1, col2 = st.columns(2, gap="large")
@@ -147,7 +146,7 @@ with col1:
     )
 
 with col2:
-    st.markdown('<div class="section-title">Hasil Laboratorium</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Laboratorium</div>', unsafe_allow_html=True)
     
     input_hb = st.number_input(
         "Hemoglobin (g/dL)", 
@@ -188,13 +187,14 @@ if st.button("Proses Analisis"):
         prediksi = model.predict(fitur_scaled)[0]
         prediksi_hari = max(1, round(prediksi, 1))
         
-        result_html = f"""
-        <div class="result-box">
-            <div class="result-text">Estimasi: {prediksi_hari} Hari</div>
-            <div class="result-note">Hasil diprediksi dengan margin of error (MAD) ± 1.5 hari. Gunakan sebagai referensi sekunder.</div>
-        </div>
-        """
+        result_html = (
+            '<div class="result-box">'
+            f'<div class="result-text">Estimasi: {prediksi_hari} Hari</div>'
+            '<div class="result-note">Hasil diprediksi dengan margin of error '
+            '(MAD) ± 1.5 hari. Gunakan sebagai referensi sekunder.</div>'
+            '</div>'
+        )
         st.markdown(result_html, unsafe_allow_html=True)
         
     except FileNotFoundError:
-        st.error("Sistem tidak dapat menemukan file model atau scaler.")
+        st.error("Sistem tidak menemukan file model atau scaler.")

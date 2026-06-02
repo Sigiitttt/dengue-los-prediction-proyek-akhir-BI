@@ -8,7 +8,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ── Session state ─────────────────────────────────────
 if "page" not in st.session_state:
     st.session_state.page = "Estimasi LOS"
 
@@ -18,147 +17,189 @@ st.markdown("""
 p, span, label, h1, h2, h3, h4, div, li, button {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
-[data-testid="stAppViewContainer"] {
-    background: linear-gradient(140deg, #0A7EA4 0%, #0A7EA4 40%, #047857 100%) !important;
-    min-height: 100vh;
-}
-[data-testid="stHeader"] { background: transparent !important; display: none !important; }
-.main .block-container   { padding: 2rem 2.5rem !important; max-width: 100% !important; }
 
+/* ── Background ── */
+[data-testid="stAppViewContainer"] { background: #F0F4FF !important; }
+[data-testid="stHeader"]           { display: none !important; }
+.main .block-container             { padding: 2rem 2.5rem !important; max-width: 100% !important; }
+
+/* ── Sidebar ── */
 [data-testid="stSidebar"] {
-    background: rgba(255,255,255,0.08) !important;
-    border-right: 1px solid rgba(255,255,255,0.12) !important;
+    background: #ffffff !important;
+    border-right: 1px solid #E4E9F2 !important;
 }
-[data-testid="stSidebar"] > div { padding: 1.5rem 1.2rem !important; }
+[data-testid="stSidebar"] > div { padding: 1.8rem 1.4rem !important; }
 
-p, span, label, div { color: rgba(255,255,255,0.85) !important; }
+/* reset warna teks global */
+p, span, label, div { color: #1A1A2E !important; }
 
-/* logo */
-.logo-wrap { display:flex;align-items:center;gap:10px;margin-bottom:28px; }
-.logo-icon { width:38px;height:38px;border-radius:10px;background:#F97316;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0; }
-.logo-name { font-size:15px !important;font-weight:700 !important;color:#fff !important;letter-spacing:-0.3px; }
-.logo-sub  { font-size:11px !important;color:rgba(255,255,255,0.45) !important;margin-top:1px; }
-.nav-label { font-size:10px !important;font-weight:700 !important;letter-spacing:.10em !important;text-transform:uppercase !important;color:rgba(255,255,255,0.30) !important;margin-bottom:6px; }
-.stat-block{ padding-top:24px;display:flex;flex-direction:column;gap:8px; }
-.stat-card-s{ background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:12px 14px; }
-.stat-lbl  { font-size:10px !important;color:rgba(255,255,255,0.40) !important;margin-bottom:4px; }
-.stat-num  { font-size:22px !important;font-weight:700 !important;color:#fff !important;letter-spacing:-0.5px; }
-.stat-unit { font-size:11px !important;color:rgba(255,255,255,0.40) !important;margin-left:3px;font-weight:400 !important; }
+/* ── Brand ── */
+.brand-row  { display:flex;align-items:center;gap:9px;margin-bottom:3px; }
+.brand-dot  { width:10px;height:10px;border-radius:50%;background:#F97316;display:inline-block; }
+.brand-name { font-size:16px !important;font-weight:700 !important;color:#1A1A2E !important;letter-spacing:-0.4px; }
+.brand-tag  { font-size:11px !important;color:#A0AABF !important;padding-left:19px; }
 
-/* nav buttons */
+/* ── Nav label ── */
+.nav-label  {
+    font-size:10px !important;font-weight:700 !important;letter-spacing:.12em !important;
+    text-transform:uppercase !important;color:#C0C8D8 !important;
+    margin-bottom:6px; margin-top:24px;
+}
+
+/* ── Nav buttons di sidebar ── */
 [data-testid="stSidebar"] [data-testid="baseButton-secondary"] {
     background: transparent !important;
     border: none !important;
     border-radius: 10px !important;
-    padding: 9px 12px !important;
+    padding: 9px 11px !important;
     font-size: 13px !important;
     font-weight: 400 !important;
-    color: rgba(255,255,255,0.55) !important;
+    color: #7A8499 !important;
     width: 100% !important;
     text-align: left !important;
     margin-bottom: 2px !important;
     box-shadow: none !important;
-    transition: background .15s !important;
     justify-content: flex-start !important;
+    transition: background .15s, color .15s !important;
 }
 [data-testid="stSidebar"] [data-testid="baseButton-secondary"]:hover {
-    background: rgba(255,255,255,0.07) !important;
-    color: #fff !important;
+    background: #F5F7FF !important;
+    color: #3B5BDB !important;
 }
 [data-testid="stSidebar"] [data-testid="baseButton-secondary"] p {
     color: inherit !important;
     font-weight: inherit !important;
 }
 
-/* nav button aktif — pakai key class via st.markdown trick, kita handle via CSS :focus */
-.nav-active [data-testid="baseButton-secondary"] {
-    background: rgba(255,255,255,0.14) !important;
-    color: #fff !important;
-    font-weight: 500 !important;
+/* ── Mini stat di sidebar ── */
+.mini-stat {
+    background:#F8FAFF;border:1px solid #E4E9F2;
+    border-radius:12px;padding:12px 14px;margin-bottom:8px;
 }
+.mini-stat-label { font-size:10px !important;color:#A0AABF !important;margin-bottom:3px; }
+.mini-stat-val   { font-size:21px !important;font-weight:700 !important;color:#1A1A2E !important;letter-spacing:-0.5px; }
+.mini-stat-unit  { font-size:11px !important;color:#A0AABF !important;margin-left:2px;font-weight:400 !important; }
 
-/* page header */
-.page-breadcrumb { font-size:11px !important;color:rgba(255,255,255,0.35) !important;margin-bottom:6px;letter-spacing:.03em; }
-.page-title      { font-size:26px !important;font-weight:700 !important;color:#fff !important;letter-spacing:-0.6px;line-height:1.2; }
-.page-sub        { font-size:13px !important;color:rgba(255,255,255,0.45) !important;margin-top:5px;line-height:1.5;margin-bottom:28px; }
+/* ── Page header ── */
+.crumb    { font-size:11px !important;color:#A0AABF !important;margin-bottom:5px;letter-spacing:.02em; }
+.page-h   { font-size:24px !important;font-weight:700 !important;color:#1A1A2E !important;letter-spacing:-0.6px;line-height:1.2; }
+.page-sub { font-size:13px !important;color:#7A8499 !important;margin-top:4px;line-height:1.5;margin-bottom:24px; }
 
-/* glass card */
-.glass {
-    background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.16);
-    border-radius:18px;padding:20px 24px 6px;margin-bottom:4px;
+.topbadge {
+    display:inline-flex;align-items:center;gap:7px;
+    background:#fff;border:1px solid #E4E9F2;border-radius:20px;
+    padding:6px 13px;font-size:11px;color:#7A8499;font-weight:500;
+    float:right; margin-top:4px;
 }
+.live-dot {
+    width:6px;height:6px;border-radius:50%;background:#10B981;
+    display:inline-block;animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ── White card ── */
+.wcard {
+    background:#fff;border:1px solid #E4E9F2;
+    border-radius:16px;padding:20px 22px 8px;margin-bottom:14px;
+}
+.card-hdr {
+    display:flex;align-items:center;gap:8px;margin-bottom:16px;
+}
+.cdot          { width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0; }
+.cdot-orange   { background:#F97316; }
+.cdot-green    { background:#10B981; }
 .card-ttl {
-    font-size:10.5px !important;font-weight:700 !important;letter-spacing:.09em !important;
-    text-transform:uppercase !important;color:rgba(255,255,255,0.40) !important;
-    display:flex;align-items:center;gap:8px;margin-bottom:14px;
+    font-size:10px !important;font-weight:700 !important;letter-spacing:.10em !important;
+    text-transform:uppercase !important;color:#A0AABF !important;
 }
-.cdot         { width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0; }
-.cdot-orange  { background:#F97316; }
-.cdot-teal    { background:#34D399; }
 
-/* form */
+/* ── Form elements ── */
 [data-testid="stSelectbox"] label,
 [data-testid="stNumberInput"] label {
     font-size:11px !important;font-weight:500 !important;
-    color:rgba(255,255,255,0.50) !important;margin-bottom:4px !important;
+    color:#7A8499 !important;margin-bottom:4px !important;
 }
 [data-baseweb="select"] > div,
 [data-baseweb="base-input"] {
-    background:rgba(255,255,255,0.08) !important;
-    border:1px solid rgba(255,255,255,0.15) !important;
-    border-radius:10px !important;color:#fff !important;
+    background:#F8FAFF !important;
+    border:1px solid #E4E9F2 !important;
+    border-radius:9px !important;
+    color:#1A1A2E !important;
+    transition:border-color .15s,background .15s !important;
 }
 [data-baseweb="select"] > div:focus-within,
 [data-baseweb="base-input"]:focus-within {
-    border-color:rgba(255,255,255,0.45) !important;background:rgba(255,255,255,0.14) !important;box-shadow:none !important;
+    border-color:#3B5BDB !important;background:#fff !important;box-shadow:none !important;
 }
-[data-baseweb="select"] *     { color:#fff !important; }
-[data-baseweb="popover"]      { background:#0d7090 !important;border:1px solid rgba(255,255,255,0.15) !important;border-radius:12px !important; }
-[data-baseweb="menu"]         { background:#0d7090 !important; }
-[data-baseweb="option"]:hover { background:rgba(255,255,255,0.12) !important; }
-input[type="number"]          { color:#fff !important;background:transparent !important; }
+[data-baseweb="select"] * { color:#1A1A2E !important; }
+[data-baseweb="popover"]  { background:#fff !important;border:1px solid #E4E9F2 !important;border-radius:12px !important; }
+[data-baseweb="menu"]     { background:#fff !important; }
+[data-baseweb="option"]:hover { background:#F0F4FF !important; }
+input[type="number"]      { color:#1A1A2E !important; }
+
 [data-testid="stNumberInput"] button {
-    background:rgba(255,255,255,0.08) !important;border:1px solid rgba(255,255,255,0.15) !important;
-    border-radius:8px !important;color:rgba(255,255,255,0.6) !important;
+    background:#F0F4FF !important;border:1px solid #E4E9F2 !important;
+    border-radius:8px !important;color:#7A8499 !important;
 }
-[data-testid="stNumberInput"] button:hover { background:rgba(255,255,255,0.18) !important;color:#fff !important; }
+[data-testid="stNumberInput"] button:hover {
+    background:#EEF2FF !important;color:#3B5BDB !important;border-color:#C5D0FF !important;
+}
 
-.footer-note { font-size:12px !important;color:rgba(255,255,255,0.32) !important;line-height:1.55 !important;margin-bottom:12px; }
+/* ── Action note ── */
+.action-note {
+    font-size:12px !important;color:#A0AABF !important;
+    line-height:1.55 !important;margin-bottom:12px;
+}
 
-/* CTA button (di konten utama) */
+/* ── CTA button di konten utama ── */
 [data-testid="stMain"] [data-testid="baseButton-secondary"] {
-    background:#F97316 !important;border:none !important;
-    border-radius:12px !important;padding:0.65rem 2rem !important;
-    font-size:0.9rem !important;font-weight:700 !important;
-    box-shadow:0 4px 18px rgba(249,115,22,0.35) !important;
-    transition:opacity .2s,transform .15s !important;
+    background: #F97316 !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.65rem 2rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 14px rgba(249,115,22,0.28) !important;
+    transition: opacity .2s, transform .15s !important;
 }
-[data-testid="stMain"] [data-testid="baseButton-secondary"]:hover { opacity:.88 !important;transform:translateY(-1px) !important; }
-[data-testid="stMain"] [data-testid="baseButton-secondary"] p     { color:#fff !important;font-weight:700 !important; }
+[data-testid="stMain"] [data-testid="baseButton-secondary"]:hover {
+    opacity: .88 !important; transform: translateY(-1px) !important;
+}
+[data-testid="stMain"] [data-testid="baseButton-secondary"] p {
+    color: #fff !important; font-weight: 700 !important;
+}
 
-/* result */
+/* ── Result ── */
 .result-box {
-    background:rgba(249,115,22,0.12);border:1px solid rgba(249,115,22,0.28);
-    border-radius:18px;padding:22px 26px;margin-top:16px;
-    display:flex;align-items:center;gap:24px;
+    background:#FFF7ED;border:1px solid #FED7AA;
+    border-radius:16px;padding:20px 24px;margin-top:4px;
+    display:flex;align-items:center;gap:22px;
 }
-.result-num   { font-size:52px !important;font-weight:800 !important;color:#FED7AA !important;letter-spacing:-2px;line-height:1; }
-.result-unit  { font-size:14px !important;color:rgba(255,255,255,0.40) !important;margin-top:2px; }
-.result-vdiv  { width:1px;background:rgba(255,255,255,0.12);align-self:stretch;flex-shrink:0; }
-.result-risk  { font-size:16px !important;font-weight:700 !important;margin-bottom:6px; }
-.result-note-t{ font-size:12px !important;color:rgba(255,255,255,0.38) !important;line-height:1.55 !important; }
-.risk-low { color:#34D399 !important; }
-.risk-med { color:#FCD34D !important; }
-.risk-hi  { color:#FCA5A5 !important; }
+.r-num  { font-size:50px !important;font-weight:800 !important;color:#EA580C !important;letter-spacing:-2px;line-height:1; }
+.r-unit { font-size:13px !important;color:#A0AABF !important;margin-top:1px; }
+.r-div  { width:1px;background:#FED7AA;align-self:stretch;flex-shrink:0; }
+.r-risk { font-size:15px !important;font-weight:700 !important;margin-bottom:5px; }
+.r-note { font-size:12px !important;color:#A0AABF !important;line-height:1.55 !important; }
+.low    { color:#10B981 !important; }
+.med    { color:#F59E0B !important; }
+.hi     { color:#EF4444 !important; }
 
 /* placeholder pages */
 .placeholder {
-    background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);
-    border-radius:18px;padding:48px 32px;text-align:center;margin-top:8px;
+    background:#fff;border:1px solid #E4E9F2;
+    border-radius:16px;padding:48px 32px;text-align:center;margin-top:8px;
 }
-.placeholder-icon { font-size:40px;margin-bottom:14px; }
-.placeholder-title{ font-size:18px !important;font-weight:700 !important;color:#fff !important;margin-bottom:8px; }
-.placeholder-sub  { font-size:13px !important;color:rgba(255,255,255,0.40) !important;line-height:1.6 !important; }
+.ph-icon  { font-size:36px;margin-bottom:12px; }
+.ph-title { font-size:18px !important;font-weight:700 !important;color:#1A1A2E !important;margin-bottom:8px; }
+.ph-sub   { font-size:13px !important;color:#A0AABF !important;line-height:1.6 !important; }
+
+.metric-row { display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px; }
+.metric-card {
+    background:#fff;border:1px solid #E4E9F2;border-radius:14px;padding:16px 18px;
+}
+.metric-label { font-size:10px !important;color:#A0AABF !important;margin-bottom:6px;letter-spacing:.03em; }
+.metric-val   { font-size:24px !important;font-weight:700 !important;color:#1A1A2E !important;letter-spacing:-0.5px; }
+.metric-unit  { font-size:12px !important;color:#A0AABF !important;margin-left:2px;font-weight:400 !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -168,101 +209,93 @@ input[type="number"]          { color:#fff !important;background:transparent !im
 # ═══════════════════════════════════════════════════════
 with st.sidebar:
     st.markdown("""
-    <div class="logo-wrap">
-      <div class="logo-icon">🏥</div>
-      <div>
-        <div class="logo-name">MediPredict</div>
-        <div class="logo-sub">Clinical Decision Support</div>
-      </div>
+    <div style="margin-bottom:28px">
+      <div class="brand-row"><div class="brand-dot"></div><div class="brand-name">MediPredict</div></div>
+      <div class="brand-tag">Clinical Decision Support</div>
     </div>
-    <div class="nav-label">Menu</div>
+    <div class="nav-label">Menu Utama</div>
     """, unsafe_allow_html=True)
 
     pages = {
-        "Estimasi LOS":      "🩺",
-        "Riwayat Prediksi":  "📋",
-        "Statistik Model":   "📊",
-        "Panduan Penggunaan":"📖",
+        "Estimasi LOS":     "🩺",
+        "Riwayat":          "📋",
+        "Statistik Model":  "📊",
+        "Panduan":          "📖",
     }
-
     for label, icon in pages.items():
         is_active = st.session_state.page == label
-        # Warna teks berubah berdasarkan state aktif
-        btn_style = (
-            "background:rgba(255,255,255,0.14);color:#fff;font-weight:600;"
-            if is_active else
-            "background:transparent;color:rgba(255,255,255,0.55);"
+        style = (
+            "background:#EEF2FF !important;color:#3B5BDB !important;font-weight:600 !important;"
+            if is_active else ""
         )
         st.markdown(f"""
         <style>
-        div[data-testid="stButton"]:has(button[kind="secondary"][aria-label="{label}"])
-            button {{
-            {btn_style}
-            border-radius:10px !important;padding:9px 12px !important;
-            width:100% !important;text-align:left !important;
-            border:none !important;box-shadow:none !important;
-            font-size:13px !important;margin-bottom:2px !important;
+        div[data-testid="stButton"]:has(button[aria-label="{label}"]) button {{
+            {style}
         }}
         </style>
         """, unsafe_allow_html=True)
-
-        if st.button(f"{icon}  {label}", key=label, args=None,
-                     help=None, use_container_width=True):
+        if st.button(f"{icon}  {label}", key=label, use_container_width=True):
             st.session_state.page = label
             st.rerun()
 
     st.markdown("""
-    <div class="stat-block">
-      <div class="stat-card-s">
-        <div class="stat-lbl">Akurasi Model</div>
-        <div class="stat-num">87.4<span class="stat-unit">%</span></div>
+    <div style="margin-top:28px">
+      <div class="mini-stat">
+        <div class="mini-stat-label">Akurasi Model</div>
+        <div class="mini-stat-val">87.4<span class="mini-stat-unit">%</span></div>
       </div>
-      <div class="stat-card-s">
-        <div class="stat-lbl">Margin Error (MAD)</div>
-        <div class="stat-num">±1.5<span class="stat-unit">hari</span></div>
+      <div class="mini-stat">
+        <div class="mini-stat-label">Margin Error (MAD)</div>
+        <div class="mini-stat-val">±1.5<span class="mini-stat-unit">hari</span></div>
       </div>
     </div>
     """, unsafe_allow_html=True)
 
 
 # ═══════════════════════════════════════════════════════
-# ROUTER HALAMAN
+# ROUTER
 # ═══════════════════════════════════════════════════════
 page = st.session_state.page
 
-# ── PAGE: Estimasi LOS ────────────────────────────────
+
+# ── Estimasi LOS ─────────────────────────────────────
 if page == "Estimasi LOS":
     st.markdown("""
-    <div class="page-breadcrumb">Dashboard · Prediksi LOS</div>
-    <div class="page-title">Estimasi Rawat Inap DBD</div>
-    <div class="page-sub">Masukkan data klinis pasien untuk mendapatkan prediksi durasi perawatan.</div>
+    <div class="crumb">Dashboard · Prediksi LOS</div>
+    <div class="page-h">Estimasi Rawat Inap DBD
+      <span class="topbadge"><span class="live-dot"></span>&nbsp;Stacking Regression</span>
+    </div>
+    <div class="page-sub">Input data klinis — model prediksi durasi perawatan otomatis.</div>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div class="glass"><div class="card-ttl"><span class="cdot cdot-orange"></span>Profil Pasien</div></div>', unsafe_allow_html=True)
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        input_jk = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-    with c2:
-        input_umur = st.number_input("Umur (Tahun)", min_value=1, max_value=100, value=25)
-    with c3:
-        input_demam = st.selectbox("Diagnosis",
-            ["DD (Dengue Fever)", "DBD (Hemorrhagic)", "DSS (Shock Syndrome)"])
+    col_left, col_right = st.columns([1, 1.6], gap="medium")
 
-    st.markdown('<div class="glass"><div class="card-ttl"><span class="cdot cdot-teal"></span>Hasil Laboratorium</div></div>', unsafe_allow_html=True)
-    l1, l2, l3 = st.columns(3)
-    with l1:
-        input_hb = st.number_input("Hemoglobin (g/dL)", min_value=1.0, max_value=25.0, value=12.0, step=0.1)
-    with l2:
-        input_hct = st.number_input("Hematokrit (%)", min_value=10.0, max_value=65.0, value=40.0, step=0.1)
-    with l3:
-        input_trombo = st.number_input("Trombosit (/µL)", min_value=1000, max_value=500000, value=100000, step=1000)
+    with col_left:
+        st.markdown('<div class="wcard"><div class="card-hdr"><div class="cdot cdot-orange"></div><div class="card-ttl">Profil Pasien</div></div></div>', unsafe_allow_html=True)
+        input_jk    = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
+        input_umur  = st.number_input("Umur (Tahun)", min_value=1, max_value=100, value=25)
+        input_demam = st.selectbox("Diagnosis", [
+            "DD — Dengue Fever",
+            "DBD — Hemorrhagic",
+            "DSS — Shock Syndrome"
+        ])
 
-    st.markdown('<div class="footer-note" style="margin-top:16px;">Hasil prediksi bersifat estimasi ± 1.5 hari. Gunakan sebagai referensi sekunder, bukan diagnosis klinis final.</div>', unsafe_allow_html=True)
+    with col_right:
+        st.markdown('<div class="wcard"><div class="card-hdr"><div class="cdot cdot-green"></div><div class="card-ttl">Hasil Laboratorium</div></div></div>', unsafe_allow_html=True)
+        l1, l2, l3 = st.columns(3)
+        with l1:
+            input_hb = st.number_input("Hemoglobin (g/dL)", min_value=1.0, max_value=25.0, value=12.0, step=0.1)
+        with l2:
+            input_hct = st.number_input("Hematokrit (%)", min_value=10.0, max_value=65.0, value=40.0, step=0.1)
+        with l3:
+            input_trombo = st.number_input("Trombosit (/µL)", min_value=1000, max_value=500000, value=100000, step=1000)
 
-    proses = st.button("Proses Analisis →")
+        st.markdown('<div class="action-note" style="margin-top:12px">Estimasi ± 1.5 hari. Gunakan sebagai referensi sekunder, bukan diagnosis klinis final.</div>', unsafe_allow_html=True)
+        proses = st.button("Analisis →")
 
     val_jk    = 0 if input_jk == "Laki-laki" else 1
-    val_demam = 0 if input_demam.startswith("DD") else (1 if input_demam.startswith("DBD") else 2)
+    val_demam = 0 if "DD" in input_demam else (1 if "DBD" in input_demam else 2)
 
     if proses:
         try:
@@ -273,18 +306,17 @@ if page == "Estimasi LOS":
                 columns=["jenis_kelamin","umur","jenis_demam","hemoglobin","hct","trombosit"]
             )
             hari = max(1, round(model.predict(scaler.transform(fitur))[0], 1))
-            if hari <= 5:   rc, rl = "risk-low", "Risiko Rendah"
-            elif hari <= 8: rc, rl = "risk-med", "Risiko Sedang"
-            else:           rc, rl = "risk-hi",  "Risiko Tinggi"
+            if hari <= 5:   rc, rl = "low", "Risiko Rendah"
+            elif hari <= 8: rc, rl = "med", "Risiko Sedang"
+            else:           rc, rl = "hi",  "Risiko Tinggi"
 
             st.markdown(f"""
             <div class="result-box">
-              <div><div class="result-num">{hari}</div><div class="result-unit">hari</div></div>
-              <div class="result-vdiv"></div>
+              <div><div class="r-num">{hari}</div><div class="r-unit">hari</div></div>
+              <div class="r-div"></div>
               <div>
-                <div class="result-risk {rc}">{rl}</div>
-                <div class="result-note-t">Diprediksi oleh Stacking Regression Model<br>
-                berdasarkan parameter klinis yang dimasukkan. Margin error ± 1.5 hari.</div>
+                <div class="r-risk {rc}">{rl}</div>
+                <div class="r-note">Diprediksi Stacking Regression · berdasarkan parameter klinis · margin ± 1.5 hari</div>
               </div>
             </div>
             """, unsafe_allow_html=True)
@@ -293,64 +325,52 @@ if page == "Estimasi LOS":
             st.error("File model tidak ditemukan. Pastikan model_regresi_dbd.pkl dan scaler_dbd.pkl ada di direktori yang sama.")
 
 
-# ── PAGE: Riwayat Prediksi ────────────────────────────
-elif page == "Riwayat Prediksi":
-    st.markdown('<div class="page-title">Riwayat Prediksi</div><div class="page-sub">Daftar prediksi yang telah dilakukan sebelumnya.</div>', unsafe_allow_html=True)
+# ── Riwayat ──────────────────────────────────────────
+elif page == "Riwayat":
+    st.markdown('<div class="page-h">Riwayat Prediksi</div><div class="page-sub">Daftar prediksi yang telah dilakukan.</div>', unsafe_allow_html=True)
     st.markdown("""
     <div class="placeholder">
-      <div class="placeholder-icon">📋</div>
-      <div class="placeholder-title">Belum ada riwayat</div>
-      <div class="placeholder-sub">Riwayat prediksi akan muncul di sini setelah kamu melakukan analisis pertama.</div>
+      <div class="ph-icon">📋</div>
+      <div class="ph-title">Belum ada riwayat</div>
+      <div class="ph-sub">Riwayat prediksi akan muncul di sini setelah kamu melakukan analisis pertama.</div>
     </div>
     """, unsafe_allow_html=True)
 
 
-# ── PAGE: Statistik Model ─────────────────────────────
+# ── Statistik Model ───────────────────────────────────
 elif page == "Statistik Model":
-    st.markdown('<div class="page-title">Statistik Model</div><div class="page-sub">Performa dan metrik evaluasi model Stacking Regression.</div>', unsafe_allow_html=True)
-
-    m1, m2, m3, m4 = st.columns(4)
-    metrics = [
-        ("Akurasi", "87.4", "%"),
-        ("MAE", "1.32", "hari"),
-        ("RMSE", "1.87", "hari"),
-        ("R² Score", "0.81", ""),
-    ]
-    for col, (label, val, unit) in zip([m1,m2,m3,m4], metrics):
-        with col:
-            st.markdown(f"""
-            <div class="stat-card-s" style="padding:18px 20px;">
-              <div class="stat-lbl">{label}</div>
-              <div class="stat-num">{val}<span class="stat-unit">{unit}</span></div>
-            </div>
-            """, unsafe_allow_html=True)
-
+    st.markdown('<div class="page-h">Statistik Model</div><div class="page-sub">Performa dan metrik evaluasi Stacking Regression.</div>', unsafe_allow_html=True)
     st.markdown("""
-    <div class="placeholder" style="margin-top:16px;">
-      <div class="placeholder-icon">📊</div>
-      <div class="placeholder-title">Visualisasi segera hadir</div>
-      <div class="placeholder-sub">Grafik feature importance dan learning curve akan ditampilkan di sini.</div>
+    <div class="metric-row">
+      <div class="metric-card"><div class="metric-label">Akurasi</div><div class="metric-val">87.4<span class="metric-unit">%</span></div></div>
+      <div class="metric-card"><div class="metric-label">MAE</div><div class="metric-val">1.32<span class="metric-unit">hari</span></div></div>
+      <div class="metric-card"><div class="metric-label">RMSE</div><div class="metric-val">1.87<span class="metric-unit">hari</span></div></div>
+      <div class="metric-card"><div class="metric-label">R² Score</div><div class="metric-val">0.81</div></div>
+    </div>
+    <div class="placeholder">
+      <div class="ph-icon">📊</div>
+      <div class="ph-title">Visualisasi segera hadir</div>
+      <div class="ph-sub">Grafik feature importance dan learning curve akan ditampilkan di sini.</div>
     </div>
     """, unsafe_allow_html=True)
 
 
-# ── PAGE: Panduan Penggunaan ──────────────────────────
-elif page == "Panduan Penggunaan":
-    st.markdown('<div class="page-title">Panduan Penggunaan</div><div class="page-sub">Cara menggunakan aplikasi MediPredict dengan benar.</div>', unsafe_allow_html=True)
-
+# ── Panduan ───────────────────────────────────────────
+elif page == "Panduan":
+    st.markdown('<div class="page-h">Panduan Penggunaan</div><div class="page-sub">Cara menggunakan MediPredict dengan benar.</div>', unsafe_allow_html=True)
     steps = [
-        ("1", "Isi Profil Pasien", "Masukkan jenis kelamin, umur, dan diagnosis pasien DBD pada bagian Profil Pasien."),
-        ("2", "Input Hasil Lab",   "Masukkan nilai hemoglobin, hematokrit, dan trombosit dari hasil laboratorium terkini."),
-        ("3", "Proses Analisis",   "Klik tombol Proses Analisis. Model akan memproses data dan menghasilkan estimasi lama rawat inap."),
-        ("4", "Interpretasi",      "Hasil menampilkan estimasi hari rawat dan kategori risiko: Rendah (≤5 hari), Sedang (6–8 hari), Tinggi (>8 hari)."),
+        ("1", "Isi Profil Pasien", "Masukkan jenis kelamin, umur, dan diagnosis pasien pada kolom kiri."),
+        ("2", "Input Hasil Lab",   "Masukkan nilai hemoglobin, hematokrit, dan trombosit terkini."),
+        ("3", "Klik Analisis",     "Tekan tombol Analisis — model memproses data dan menghasilkan estimasi hari rawat."),
+        ("4", "Baca Hasilnya",     "Lihat estimasi hari dan kategori risiko: Rendah ≤5 hari, Sedang 6–8 hari, Tinggi >8 hari."),
     ]
     for num, title, desc in steps:
         st.markdown(f"""
-        <div class="glass" style="display:flex;align-items:flex-start;gap:16px;padding:18px 22px;margin-bottom:10px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:#F97316;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;">{num}</div>
+        <div class="wcard" style="display:flex;align-items:flex-start;gap:14px;padding:18px 22px;margin-bottom:10px">
+          <div style="width:30px;height:30px;border-radius:50%;background:#F97316;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">{num}</div>
           <div>
-            <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">{title}</div>
-            <div style="font-size:13px;color:rgba(255,255,255,0.50);line-height:1.55;">{desc}</div>
+            <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-bottom:4px">{title}</div>
+            <div style="font-size:13px;color:#7A8499;line-height:1.55">{desc}</div>
           </div>
         </div>
         """, unsafe_allow_html=True)

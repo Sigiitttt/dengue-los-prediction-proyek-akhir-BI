@@ -1,5 +1,4 @@
 import streamlit as st
-import streamlit.components.v1 as components
 import pandas as pd
 import joblib
 
@@ -12,80 +11,6 @@ st.set_page_config(
 if "page" not in st.session_state:
     st.session_state.page = "Estimasi LOS"
 
-# ── Floating sidebar toggle button via components ──────────────────────────
-components.html("""
-<style>
-  #tog {
-    position: fixed;
-    top: 14px;
-    left: 14px;
-    z-index: 999999;
-    width: 38px;
-    height: 38px;
-    background: #191D27;
-    border: 1px solid #252A38;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    cursor: pointer;
-    transition: background .2s, border-color .2s;
-    padding: 0;
-  }
-  #tog:hover { background: #252A38; border-color: #3D4557; }
-  .b { width: 16px; height: 2px; background: #F97316; border-radius: 2px; }
-</style>
-<div id="tog" title="Buka / tutup sidebar">
-  <div class="b"></div>
-  <div class="b"></div>
-  <div class="b"></div>
-</div>
-<script>
-document.getElementById('tog').addEventListener('click', function() {
-  // Streamlit app jalan di window.parent dari iframe components
-  var doc = window.parent.document;
-
-  // Coba semua kemungkinan selector tombol native Streamlit
-  var nativeBtns = [
-    doc.querySelector('[data-testid="stSidebarNavCollapseButton"]'),
-    doc.querySelector('[data-testid="collapsedControl"] button'),
-    doc.querySelector('[data-testid="stSidebarCollapsedControl"] button'),
-    doc.querySelector('[data-testid="stSidebarNavCollapseIcon"]'),
-    doc.querySelector('button[aria-label="Close sidebar"]'),
-    doc.querySelector('button[aria-label="Open sidebar"]'),
-    doc.querySelector('button[data-testid="baseButton-headerNoPadding"]'),
-  ].filter(Boolean);
-
-  if (nativeBtns.length > 0) {
-    nativeBtns[0].click();
-    return;
-  }
-
-  // Fallback: manipulasi sidebar langsung
-  var sidebar = doc.querySelector('[data-testid="stSidebar"]');
-  if (!sidebar) return;
-
-  var isOpen = sidebar.offsetWidth > 50;
-  if (isOpen) {
-    sidebar.style.transition = 'margin-left 0.25s ease';
-    sidebar.style.marginLeft  = '-' + sidebar.offsetWidth + 'px';
-    setTimeout(function() {
-      sidebar.style.display = 'none';
-      sidebar.style.marginLeft = '';
-    }, 260);
-  } else {
-    sidebar.style.display = '';
-    sidebar.style.marginLeft = '-' + sidebar.offsetWidth + 'px';
-    requestAnimationFrame(function() {
-      sidebar.style.transition = 'margin-left 0.25s ease';
-      sidebar.style.marginLeft = '0px';
-    });
-  }
-});
-</script>
-""", height=0, scrolling=False)
 
 
 st.markdown("""
@@ -100,8 +25,42 @@ html, body, p, span, label, h1, h2, h3, h4, div, li, button, input, select, text
 
 /* ── Background ── */
 [data-testid="stAppViewContainer"] { background: #0D0F14 !important; }
-[data-testid="stHeader"]           { display: none !important; }
 .main .block-container             { padding: 2.2rem 2.8rem !important; max-width: 100% !important; }
+
+/* ── Header: tipis, gelap, hanya tampilkan tombol sidebar ── */
+[data-testid="stHeader"] {
+    background: #0D0F14 !important;
+    border-bottom: 1px solid #252A38 !important;
+}
+/* sembunyikan elemen header selain tombol sidebar */
+[data-testid="stHeader"] > div > div:last-child { display: none !important; }
+
+/* ── Paksa semua varian tombol sidebar toggle muncul & terstyle ── */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="collapsedControl"] button,
+[data-testid="stSidebar"] ~ div button[kind="header"],
+section[data-testid="stSidebarContent"] ~ button {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: #191D27 !important;
+    border: 1px solid #252A38 !important;
+    border-radius: 10px !important;
+    width: 38px !important;
+    height: 38px !important;
+}
+[data-testid="stSidebarCollapsedControl"] button svg,
+[data-testid="collapsedControl"] button svg {
+    color: #F97316 !important;
+    fill: #F97316 !important;
+}
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {

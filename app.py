@@ -24,8 +24,37 @@ html, body, p, span, label, h1, h2, h3, h4, div, li, button, input, select, text
 
 /* ── Background & layout ── */
 [data-testid="stAppViewContainer"] { background: #0D0F14 !important; }
-[data-testid="stHeader"]           { display: none !important; }
 .main .block-container             { padding: 2.2rem 2.8rem !important; max-width: 100% !important; }
+
+/* ── Header: tampilkan hanya tombol toggle sidebar ── */
+[data-testid="stHeader"] {
+    background: #0D0F14 !important;
+    border-bottom: 1px solid #252A38 !important;
+    height: 48px !important;
+}
+[data-testid="stHeader"] [data-testid="stToolbar"],
+[data-testid="stHeader"] [data-testid="stDecoration"] {
+    display: none !important;
+}
+/* tombol buka/tutup sidebar */
+[data-testid="stSidebarCollapsedControl"],
+[data-testid="collapsedControl"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+[data-testid="stSidebarCollapsedControl"] button,
+[data-testid="collapsedControl"] button {
+    background: #191D27 !important;
+    border: 1px solid #252A38 !important;
+    border-radius: 9px !important;
+    color: #F97316 !important;
+}
+[data-testid="stSidebarCollapsedControl"] svg,
+[data-testid="collapsedControl"] svg {
+    fill: #F97316 !important;
+    stroke: #F97316 !important;
+}
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
@@ -54,29 +83,45 @@ p, span, label, div { color: #F0F2F8 !important; }
     margin-bottom:8px; margin-top:24px;
 }
 
-/* ── Nav buttons ── */
-[data-testid="stSidebar"] [data-testid="baseButton-secondary"] {
+/* ── Nav radio ── */
+[data-testid="stSidebar"] [data-testid="stRadio"] > label {
+    display: none !important;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
+    gap: 2px !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"] {
     background: transparent !important;
-    border: none !important;
+    border: 1px solid transparent !important;
     border-radius: 10px !important;
     padding: 9px 12px !important;
+    cursor: pointer !important;
+    transition: background .15s, color .15s !important;
+    align-items: center !important;
+    gap: 0 !important;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"]:hover {
+    background: #191D27 !important;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"] span:last-child {
     font-size: 13px !important;
     font-weight: 500 !important;
     color: #7A8499 !important;
-    width: 100% !important;
-    text-align: left !important;
-    margin-bottom: 2px !important;
-    box-shadow: none !important;
-    justify-content: flex-start !important;
-    transition: background .15s, color .15s !important;
+    padding-left: 8px !important;
 }
-[data-testid="stSidebar"] [data-testid="baseButton-secondary"]:hover {
-    background: #191D27 !important;
-    color: #F0F2F8 !important;
+[data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
+    background: rgba(249,115,22,.12) !important;
+    border: 1px solid rgba(249,115,22,.2) !important;
 }
-[data-testid="stSidebar"] [data-testid="baseButton-secondary"] p {
-    color: inherit !important;
-    font-weight: inherit !important;
+[data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) span:last-child {
+    color: #F97316 !important;
+    font-weight: 700 !important;
+}
+/* sembunyikan radio circle asli */
+[data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child {
+    display: none !important;
 }
 
 /* ── Sidebar stats ── */
@@ -314,31 +359,30 @@ with st.sidebar:
     <div class="nav-label">Menu Utama</div>
     """, unsafe_allow_html=True)
 
-    pages = {
-        "Estimasi LOS":    "🩺",
-        "Riwayat":         "📋",
-        "Statistik Model": "📊",
-        "Panduan":         "📖",
+    nav_options = [
+        "🩺  Estimasi LOS",
+        "📋  Riwayat",
+        "📊  Statistik Model",
+        "📖  Panduan",
+    ]
+    nav_map = {
+        "🩺  Estimasi LOS":    "Estimasi LOS",
+        "📋  Riwayat":         "Riwayat",
+        "📊  Statistik Model": "Statistik Model",
+        "📖  Panduan":         "Panduan",
     }
-    for label, icon in pages.items():
-        is_active = st.session_state.page == label
-        active_style = (
-            "background:rgba(249,115,22,.12) !important;"
-            "color:#F97316 !important;"
-            "font-weight:700 !important;"
-            "border:1px solid rgba(249,115,22,.2) !important;"
-            if is_active else ""
-        )
-        st.markdown(f"""
-        <style>
-        div[data-testid="stButton"]:has(button[aria-label="{label}"]) button {{
-            {active_style}
-        }}
-        </style>
-        """, unsafe_allow_html=True)
-        if st.button(f"{icon}  {label}", key=label, use_container_width=True):
-            st.session_state.page = label
-            st.rerun()
+    nav_map_rev = {v: k for k, v in nav_map.items()}
+
+    selected_nav = st.radio(
+        "nav",
+        nav_options,
+        index=nav_options.index(nav_map_rev[st.session_state.page]),
+        label_visibility="collapsed",
+    )
+    new_page = nav_map[selected_nav]
+    if new_page != st.session_state.page:
+        st.session_state.page = new_page
+        st.rerun()
 
     st.markdown("""
     <div style="margin-top:28px; border-top:1px solid #252A38; padding-top:20px;">

@@ -17,44 +17,14 @@ st.markdown("""
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Global font override ── */
 html, body, p, span, label, h1, h2, h3, h4, div, li, button, input, select, textarea {
     font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
-/* ── Background & layout ── */
+/* ── Background ── */
 [data-testid="stAppViewContainer"] { background: #0D0F14 !important; }
+[data-testid="stHeader"]           { display: none !important; }
 .main .block-container             { padding: 2.2rem 2.8rem !important; max-width: 100% !important; }
-
-/* ── Header: tampilkan hanya tombol toggle sidebar ── */
-[data-testid="stHeader"] {
-    background: #0D0F14 !important;
-    border-bottom: 1px solid #252A38 !important;
-    height: 48px !important;
-}
-[data-testid="stHeader"] [data-testid="stToolbar"],
-[data-testid="stHeader"] [data-testid="stDecoration"] {
-    display: none !important;
-}
-/* tombol buka/tutup sidebar */
-[data-testid="stSidebarCollapsedControl"],
-[data-testid="collapsedControl"] {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-[data-testid="stSidebarCollapsedControl"] button,
-[data-testid="collapsedControl"] button {
-    background: #191D27 !important;
-    border: 1px solid #252A38 !important;
-    border-radius: 9px !important;
-    color: #F97316 !important;
-}
-[data-testid="stSidebarCollapsedControl"] svg,
-[data-testid="collapsedControl"] svg {
-    fill: #F97316 !important;
-    stroke: #F97316 !important;
-}
 
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
@@ -63,20 +33,15 @@ html, body, p, span, label, h1, h2, h3, h4, div, li, button, input, select, text
 }
 [data-testid="stSidebar"] > div { padding: 1.8rem 1.4rem !important; }
 
-/* reset text colors */
 p, span, label, div { color: #F0F2F8 !important; }
 
 /* ── Brand ── */
 .brand-row  { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
-.brand-icon {
-    width:34px; height:34px; background:#F97316; border-radius:9px;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-}
-.brand-icon-inner { font-size:16px; line-height:1; }
+.brand-icon { width:34px; height:34px; background:#F97316; border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.brand-icon-inner { font-size:18px; line-height:1; }
 .brand-name { font-size:15px !important; font-weight:800 !important; color:#F0F2F8 !important; letter-spacing:-0.3px; }
 .brand-sub  { font-size:9px !important; color:#3D4557 !important; letter-spacing:.12em; text-transform:uppercase; margin-bottom:28px; padding-left:44px; }
 
-/* ── Nav section label ── */
 .nav-label {
     font-size:9px !important; font-weight:700 !important; letter-spacing:.14em !important;
     text-transform:uppercase !important; color:#3D4557 !important;
@@ -84,13 +49,9 @@ p, span, label, div { color: #F0F2F8 !important; }
 }
 
 /* ── Nav radio ── */
-[data-testid="stSidebar"] [data-testid="stRadio"] > label {
-    display: none !important;
-}
+[data-testid="stSidebar"] [data-testid="stRadio"] > label { display: none !important; }
 [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
-    gap: 2px !important;
-    display: flex !important;
-    flex-direction: column !important;
+    gap: 2px !important; display: flex !important; flex-direction: column !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"] {
     background: transparent !important;
@@ -98,45 +59,57 @@ p, span, label, div { color: #F0F2F8 !important; }
     border-radius: 10px !important;
     padding: 9px 12px !important;
     cursor: pointer !important;
-    transition: background .15s, color .15s !important;
+    transition: background .15s !important;
     align-items: center !important;
-    gap: 0 !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"]:hover {
     background: #191D27 !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"] span:last-child {
-    font-size: 13px !important;
-    font-weight: 500 !important;
-    color: #7A8499 !important;
-    padding-left: 8px !important;
+    font-size: 13px !important; font-weight: 500 !important;
+    color: #7A8499 !important; padding-left: 8px !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) {
     background: rgba(249,115,22,.12) !important;
     border: 1px solid rgba(249,115,22,.2) !important;
 }
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"]:has(input:checked) span:last-child {
-    color: #F97316 !important;
-    font-weight: 700 !important;
+    color: #F97316 !important; font-weight: 700 !important;
 }
-/* sembunyikan radio circle asli */
 [data-testid="stSidebar"] [data-testid="stRadio"] label[data-baseweb="radio"] > div:first-child {
     display: none !important;
 }
 
 /* ── Sidebar stats ── */
-.mini-stat {
-    background: #191D27;
-    border: 1px solid #252A38;
-    border-radius: 13px;
-    padding: 14px 16px;
-    margin-bottom: 8px;
-}
+.mini-stat { background:#191D27; border:1px solid #252A38; border-radius:13px; padding:14px 16px; margin-bottom:8px; }
 .mini-stat-label { font-size:9px !important; color:#7A8499 !important; letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
 .mini-stat-val   { font-size:22px !important; font-weight:800 !important; color:#F0F2F8 !important; letter-spacing:-0.8px; line-height:1; }
 .mini-stat-unit  { font-size:11px !important; color:#7A8499 !important; margin-left:2px; font-weight:400 !important; }
 .mini-stat-bar   { height:3px; background:#252A38; border-radius:2px; margin-top:10px; overflow:hidden; }
 .mini-stat-fill  { height:100%; width:87.4%; border-radius:2px; background:#F97316; }
+
+/* ── Custom sidebar toggle button ── */
+#sidebar-toggle-btn {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 9999;
+    width: 36px;
+    height: 36px;
+    background: #191D27;
+    border: 1px solid #252A38;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    flex-direction: column;
+    gap: 4px;
+    padding: 9px 8px;
+}
+#sidebar-toggle-btn:hover { background: #252A38; border-color: #3D4557; }
+#sidebar-toggle-btn .bar  { width: 16px; height: 2px; background: #F97316; border-radius: 2px; transition: all .25s; }
 
 /* ── Page header ── */
 .crumb    { font-size:11px !important; color:#3D4557 !important; margin-bottom:6px; letter-spacing:.04em; }
@@ -150,36 +123,19 @@ p, span, label, div { color: #F0F2F8 !important; }
     padding:7px 14px; font-size:11px; color:#7A8499; font-weight:500;
     float:right; margin-top:6px;
 }
-.live-dot {
-    width:7px; height:7px; border-radius:50%; background:#10B981;
-    display:inline-block; animation:pulse 2s infinite;
-}
+.live-dot { width:7px; height:7px; border-radius:50%; background:#10B981; display:inline-block; animation:pulse 2s infinite; }
 @keyframes pulse {
     0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(16,185,129,.4); }
     50%      { opacity:.7; box-shadow:0 0 0 5px rgba(16,185,129,0); }
 }
 
-/* ── White card → Dark card ── */
-.wcard {
-    background: #13161D;
-    border: 1px solid #252A38;
-    border-radius: 18px;
-    padding: 22px 24px 10px;
-    margin-bottom: 16px;
-}
-.card-hdr {
-    display:flex; align-items:center; gap:9px;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid #252A38;
-}
+/* ── Cards ── */
+.wcard { background:#13161D; border:1px solid #252A38; border-radius:18px; padding:22px 24px 10px; margin-bottom:16px; }
+.card-hdr { display:flex; align-items:center; gap:9px; margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid #252A38; }
 .cdot        { width:8px; height:8px; border-radius:50%; display:inline-block; flex-shrink:0; }
 .cdot-orange { background:#F97316; }
 .cdot-green  { background:#10B981; }
-.card-ttl {
-    font-size:9px !important; font-weight:700 !important; letter-spacing:.14em !important;
-    text-transform:uppercase !important; color:#7A8499 !important;
-}
+.card-ttl { font-size:9px !important; font-weight:700 !important; letter-spacing:.14em !important; text-transform:uppercase !important; color:#7A8499 !important; }
 
 /* ── Form elements ── */
 [data-testid="stSelectbox"] label,
@@ -190,157 +146,148 @@ p, span, label, div { color: #F0F2F8 !important; }
 }
 [data-baseweb="select"] > div,
 [data-baseweb="base-input"] {
-    background: #191D27 !important;
-    border: 1px solid #252A38 !important;
-    border-radius: 10px !important;
-    color: #F0F2F8 !important;
-    transition: border-color .2s, background .2s !important;
+    background:#191D27 !important; border:1px solid #252A38 !important;
+    border-radius:10px !important; color:#F0F2F8 !important;
+    transition:border-color .2s, background .2s !important;
 }
 [data-baseweb="select"] > div:focus-within,
 [data-baseweb="base-input"]:focus-within {
-    border-color: #F97316 !important;
-    background: #0D0F14 !important;
-    box-shadow: none !important;
+    border-color:#F97316 !important; background:#0D0F14 !important; box-shadow:none !important;
 }
-[data-baseweb="select"] *       { color: #F0F2F8 !important; }
-[data-baseweb="popover"]        { background:#13161D !important; border:1px solid #252A38 !important; border-radius:12px !important; }
-[data-baseweb="menu"]           { background:#13161D !important; }
-[data-baseweb="option"]:hover   { background:#191D27 !important; }
-input[type="number"]            { color:#F0F2F8 !important; }
+[data-baseweb="select"] *     { color:#F0F2F8 !important; }
+[data-baseweb="popover"]      { background:#13161D !important; border:1px solid #252A38 !important; border-radius:12px !important; }
+[data-baseweb="menu"]         { background:#13161D !important; }
+[data-baseweb="option"]:hover { background:#191D27 !important; }
+input[type="number"]          { color:#F0F2F8 !important; }
 
 [data-testid="stNumberInput"] button {
-    background: #191D27 !important;
-    border: 1px solid #252A38 !important;
-    border-radius: 8px !important;
-    color: #7A8499 !important;
+    background:#191D27 !important; border:1px solid #252A38 !important;
+    border-radius:8px !important; color:#7A8499 !important;
 }
 [data-testid="stNumberInput"] button:hover {
-    background: #252A38 !important;
-    color: #F97316 !important;
-    border-color: #3D4557 !important;
+    background:#252A38 !important; color:#F97316 !important; border-color:#3D4557 !important;
 }
 
-/* ── Hint box ── */
+/* ── Hint ── */
 .action-note {
-    font-size:11px !important; color:#7A8499 !important;
-    line-height:1.6 !important; margin-bottom:14px;
-    padding:12px 14px; background:#191D27;
+    font-size:11px !important; color:#7A8499 !important; line-height:1.6 !important;
+    margin-bottom:14px; padding:12px 14px; background:#191D27;
     border-radius:10px; border-left:2px solid #7C3A0A;
 }
 
 /* ── Analyse button ── */
 [data-testid="stMain"] [data-testid="baseButton-secondary"] {
-    background: #F97316 !important;
-    border: none !important;
-    border-radius: 12px !important;
-    padding: 0.75rem 2rem !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    letter-spacing: .02em !important;
-    box-shadow: 0 8px 24px rgba(249,115,22,.3) !important;
-    transition: opacity .2s, transform .15s !important;
+    background:#F97316 !important; border:none !important; border-radius:12px !important;
+    padding:0.75rem 2rem !important; font-size:14px !important; font-weight:700 !important;
+    letter-spacing:.02em !important; box-shadow:0 8px 24px rgba(249,115,22,.3) !important;
+    transition:opacity .2s, transform .15s !important;
 }
 [data-testid="stMain"] [data-testid="baseButton-secondary"]:hover {
-    opacity: .88 !important;
-    transform: translateY(-1px) !important;
+    opacity:.88 !important; transform:translateY(-1px) !important;
 }
-[data-testid="stMain"] [data-testid="baseButton-secondary"] p {
-    color: #fff !important;
-    font-weight: 700 !important;
-}
+[data-testid="stMain"] [data-testid="baseButton-secondary"] p { color:#fff !important; font-weight:700 !important; }
 
 /* ── Result box ── */
 .result-box {
-    background: linear-gradient(135deg, #1A0E05 0%, #110D05 100%);
-    border: 1px solid #7C3A0A;
-    border-radius: 18px;
-    padding: 24px 28px;
-    margin-top: 6px;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    position: relative;
-    overflow: hidden;
+    background:linear-gradient(135deg,#1A0E05 0%,#110D05 100%);
+    border:1px solid #7C3A0A; border-radius:18px;
+    padding:24px 28px; margin-top:6px;
+    display:flex; align-items:center; gap:24px;
+    position:relative; overflow:hidden;
 }
 .result-box::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(249,115,22,.12), transparent 70%);
-    pointer-events: none;
+    content:''; position:absolute; top:-40px; right:-40px;
+    width:160px; height:160px; border-radius:50%;
+    background:radial-gradient(circle,rgba(249,115,22,.12),transparent 70%);
+    pointer-events:none;
 }
-.r-num  {
-    font-size: 62px !important; font-weight: 800 !important;
-    color: #F97316 !important; letter-spacing: -3px; line-height: 1;
-    font-family: 'DM Mono', monospace !important;
-}
-.r-unit { font-size: 13px !important; color: #7A8499 !important; margin-top: 2px; }
-.r-div  { width: 1px; background: #7C3A0A; align-self: stretch; flex-shrink: 0; }
-.r-risk { font-size: 15px !important; font-weight: 700 !important; margin-bottom: 6px; letter-spacing:-.2px; }
-.r-note { font-size: 12px !important; color: #7A8499 !important; line-height: 1.65 !important; }
-.low    { color: #10B981 !important; }
-.med    { color: #F59E0B !important; }
-.hi     { color: #EF4444 !important; }
+.r-num  { font-size:62px !important; font-weight:800 !important; color:#F97316 !important; letter-spacing:-3px; line-height:1; font-family:'DM Mono',monospace !important; }
+.r-unit { font-size:13px !important; color:#7A8499 !important; margin-top:2px; }
+.r-div  { width:1px; background:#7C3A0A; align-self:stretch; flex-shrink:0; }
+.r-note { font-size:12px !important; color:#7A8499 !important; line-height:1.65 !important; }
 
-.risk-pill {
-    display: inline-flex; align-items: center; gap: 6px;
-    border-radius: 20px; padding: 4px 12px;
-    font-size: 11px; font-weight: 700;
-    margin-bottom: 8px; letter-spacing: .04em;
-}
-.pill-low { background: rgba(16,185,129,.12); color:#10B981 !important; border:1px solid rgba(16,185,129,.2); }
-.pill-med { background: rgba(245,158,11,.12); color:#F59E0B !important; border:1px solid rgba(245,158,11,.2); }
-.pill-hi  { background: rgba(239,68,68,.12);  color:#EF4444 !important; border:1px solid rgba(239,68,68,.2); }
+.risk-pill { display:inline-flex; align-items:center; gap:6px; border-radius:20px; padding:4px 12px; font-size:11px; font-weight:700; margin-bottom:8px; letter-spacing:.04em; }
+.pill-low { background:rgba(16,185,129,.12); color:#10B981 !important; border:1px solid rgba(16,185,129,.2); }
+.pill-med { background:rgba(245,158,11,.12); color:#F59E0B !important; border:1px solid rgba(245,158,11,.2); }
+.pill-hi  { background:rgba(239,68,68,.12);  color:#EF4444 !important; border:1px solid rgba(239,68,68,.2); }
 
-/* ── Placeholder pages ── */
-.placeholder {
-    background: #13161D;
-    border: 1px solid #252A38;
-    border-radius: 18px;
-    padding: 64px 32px;
-    text-align: center;
-    margin-top: 8px;
-}
-.ph-icon  { font-size: 36px; margin-bottom: 14px; opacity:.5; }
-.ph-title { font-size: 20px !important; font-weight: 700 !important; color: #F0F2F8 !important; margin-bottom: 8px; letter-spacing:-.3px; }
-.ph-sub   { font-size: 13px !important; color: #7A8499 !important; line-height: 1.65 !important; }
+/* ── Placeholder ── */
+.placeholder { background:#13161D; border:1px solid #252A38; border-radius:18px; padding:64px 32px; text-align:center; margin-top:8px; }
+.ph-icon  { font-size:36px; margin-bottom:14px; opacity:.5; }
+.ph-title { font-size:20px !important; font-weight:700 !important; color:#F0F2F8 !important; margin-bottom:8px; letter-spacing:-.3px; }
+.ph-sub   { font-size:13px !important; color:#7A8499 !important; line-height:1.65 !important; }
 
-/* ── Statistik metric row ── */
-.metric-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
-.metric-card {
-    background: #13161D;
-    border: 1px solid #252A38;
-    border-radius: 14px;
-    padding: 18px 20px;
-}
+/* ── Metrics ── */
+.metric-row  { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:16px; }
+.metric-card { background:#13161D; border:1px solid #252A38; border-radius:14px; padding:18px 20px; }
 .metric-label { font-size:9px !important; color:#7A8499 !important; letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
 .metric-val   { font-size:26px !important; font-weight:800 !important; color:#F0F2F8 !important; letter-spacing:-0.8px; line-height:1; }
 .metric-unit  { font-size:12px !important; color:#7A8499 !important; margin-left:2px; font-weight:400 !important; }
 
-/* ── Guide steps ── */
-.guide-step {
-    background: #13161D;
-    border: 1px solid #252A38;
-    border-radius: 14px;
-    padding: 18px 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    margin-bottom: 10px;
-    transition: border-color .2s;
-}
-.guide-step:hover { border-color: #3D4557; }
-.step-num {
-    width: 34px; height: 34px; border-radius: 10px;
-    background: #F97316;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0;
-}
+/* ── Guide ── */
+.guide-step { background:#13161D; border:1px solid #252A38; border-radius:14px; padding:18px 20px; display:flex; align-items:flex-start; gap:16px; margin-bottom:10px; transition:border-color .2s; }
+.guide-step:hover { border-color:#3D4557; }
+.step-num   { width:34px; height:34px; border-radius:10px; background:#F97316; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; color:#fff; flex-shrink:0; }
 .step-title { font-size:14px !important; font-weight:700 !important; color:#F0F2F8 !important; margin-bottom:4px; letter-spacing:-.2px; }
 .step-desc  { font-size:13px !important; color:#7A8499 !important; line-height:1.6 !important; }
 </style>
+
+<!-- Custom sidebar toggle button -->
+<div id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Buka / tutup sidebar">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</div>
+
+<script>
+function toggleSidebar() {
+    // Streamlit menyimpan sidebar dalam beberapa selector berbeda antar versi
+    const selectors = [
+        '[data-testid="stSidebar"]',
+        'section[data-testid="stSidebar"]',
+        '.css-1d391kg',
+        '.css-17eq0hr'
+    ];
+    let sidebar = null;
+    for (const sel of selectors) {
+        sidebar = window.parent.document.querySelector(sel);
+        if (sidebar) break;
+    }
+    if (!sidebar) return;
+
+    const isCollapsed = sidebar.style.display === 'none' || sidebar.classList.contains('hidden') || sidebar.offsetWidth < 10;
+
+    if (isCollapsed) {
+        sidebar.style.display = '';
+        sidebar.style.width   = '';
+        sidebar.style.minWidth = '';
+        sidebar.style.transform = 'translateX(0)';
+        sidebar.style.transition = 'transform 0.25s ease';
+    } else {
+        sidebar.style.transform = 'translateX(-110%)';
+        sidebar.style.transition = 'transform 0.25s ease';
+        setTimeout(() => { sidebar.style.display = 'none'; }, 250);
+    }
+}
+
+// Alternatif: klik tombol toggle bawaan Streamlit jika ada
+function clickNativeToggle() {
+    const doc = window.parent.document;
+    const btns = [
+        doc.querySelector('[data-testid="collapsedControl"] button'),
+        doc.querySelector('[data-testid="stSidebarCollapsedControl"] button'),
+        doc.querySelector('button[kind="header"]'),
+    ].filter(Boolean);
+    if (btns.length > 0) { btns[0].click(); return true; }
+    return false;
+}
+
+document.getElementById('sidebar-toggle-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    // Coba native toggle dulu, fallback ke manual
+    if (!clickNativeToggle()) toggleSidebar();
+});
+</script>
 """, unsafe_allow_html=True)
 
 
@@ -349,7 +296,7 @@ input[type="number"]            { color:#F0F2F8 !important; }
 # ═══════════════════════════════════════════════════════
 with st.sidebar:
     st.markdown("""
-    <div style="margin-bottom:28px">
+    <div style="margin-bottom:28px; padding-top:4px;">
       <div class="brand-row">
         <div class="brand-icon"><div class="brand-icon-inner">♡</div></div>
         <div class="brand-name">MediPredict</div>
@@ -472,20 +419,11 @@ if page == "Estimasi LOS":
             hari = max(1, round(model.predict(scaler.transform(fitur))[0], 1))
 
             if hari <= 5:
-                rc, rl, pill_class, pill_desc = (
-                    "low", "Risiko Rendah", "pill-low",
-                    "Rawat inap singkat diprediksi. Pantau trombosit harian dan pastikan hidrasi cukup."
-                )
+                pill_class, rl, pill_desc = "pill-low", "Risiko Rendah", "Rawat inap singkat diprediksi. Pantau trombosit harian dan pastikan hidrasi cukup."
             elif hari <= 8:
-                rc, rl, pill_class, pill_desc = (
-                    "med", "Risiko Sedang", "pill-med",
-                    "Monitoring intensif diperlukan. Pantau tanda perdarahan dan perubahan hematokrit."
-                )
+                pill_class, rl, pill_desc = "pill-med", "Risiko Sedang", "Monitoring intensif diperlukan. Pantau tanda perdarahan dan perubahan hematokrit."
             else:
-                rc, rl, pill_class, pill_desc = (
-                    "hi", "Risiko Tinggi", "pill-hi",
-                    "Perlu perhatian klinis ekstra. Pertimbangkan pemantauan ICU dan konsultasi spesialis."
-                )
+                pill_class, rl, pill_desc = "pill-hi", "Risiko Tinggi", "Perlu perhatian klinis ekstra. Pertimbangkan pemantauan ICU dan konsultasi spesialis."
 
             st.markdown(f"""
             <div class="result-box">
@@ -529,22 +467,10 @@ elif page == "Statistik Model":
     <div class="page-h">Statistik <em>Model</em></div>
     <div class="page-sub">Performa dan metrik evaluasi Stacking Regression.</div>
     <div class="metric-row">
-      <div class="metric-card">
-        <div class="metric-label">Akurasi</div>
-        <div class="metric-val">87.4<span class="metric-unit">%</span></div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">MAE</div>
-        <div class="metric-val">1.32<span class="metric-unit">hari</span></div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">RMSE</div>
-        <div class="metric-val">1.87<span class="metric-unit">hari</span></div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">R² Score</div>
-        <div class="metric-val">0.81</div>
-      </div>
+      <div class="metric-card"><div class="metric-label">Akurasi</div><div class="metric-val">87.4<span class="metric-unit">%</span></div></div>
+      <div class="metric-card"><div class="metric-label">MAE</div><div class="metric-val">1.32<span class="metric-unit">hari</span></div></div>
+      <div class="metric-card"><div class="metric-label">RMSE</div><div class="metric-val">1.87<span class="metric-unit">hari</span></div></div>
+      <div class="metric-card"><div class="metric-label">R² Score</div><div class="metric-val">0.81</div></div>
     </div>
     <div class="placeholder">
       <div class="ph-icon">📊</div>
@@ -563,14 +489,10 @@ elif page == "Panduan":
     """, unsafe_allow_html=True)
 
     steps = [
-        ("1", "Isi Profil Pasien",
-         "Masukkan jenis kelamin, umur, dan diagnosis pasien pada kolom kiri."),
-        ("2", "Input Hasil Lab",
-         "Masukkan nilai hemoglobin, hematokrit, dan trombosit terkini."),
-        ("3", "Klik Analisis",
-         "Tekan tombol Analisis — model memproses data dan menghasilkan estimasi hari rawat."),
-        ("4", "Baca Hasilnya",
-         "Lihat estimasi hari dan kategori risiko: Rendah ≤5 hari, Sedang 6–8 hari, Tinggi >8 hari."),
+        ("1", "Isi Profil Pasien",  "Masukkan jenis kelamin, umur, dan diagnosis pasien pada kolom kiri."),
+        ("2", "Input Hasil Lab",    "Masukkan nilai hemoglobin, hematokrit, dan trombosit terkini."),
+        ("3", "Klik Analisis",      "Tekan tombol Analisis — model memproses data dan menghasilkan estimasi hari rawat."),
+        ("4", "Baca Hasilnya",      "Lihat estimasi hari dan kategori risiko: Rendah ≤5 hari, Sedang 6–8 hari, Tinggi >8 hari."),
     ]
     for num, title, desc in steps:
         st.markdown(f"""

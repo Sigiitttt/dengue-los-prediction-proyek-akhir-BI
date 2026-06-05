@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import joblib
 
@@ -10,6 +11,82 @@ st.set_page_config(
 
 if "page" not in st.session_state:
     st.session_state.page = "Estimasi LOS"
+
+# ── Floating sidebar toggle button via components ──────────────────────────
+components.html("""
+<style>
+  #tog {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 999999;
+    width: 38px;
+    height: 38px;
+    background: #191D27;
+    border: 1px solid #252A38;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+    padding: 0;
+  }
+  #tog:hover { background: #252A38; border-color: #3D4557; }
+  .b { width: 16px; height: 2px; background: #F97316; border-radius: 2px; }
+</style>
+<div id="tog" title="Buka / tutup sidebar">
+  <div class="b"></div>
+  <div class="b"></div>
+  <div class="b"></div>
+</div>
+<script>
+document.getElementById('tog').addEventListener('click', function() {
+  // Streamlit app jalan di window.parent dari iframe components
+  var doc = window.parent.document;
+
+  // Coba semua kemungkinan selector tombol native Streamlit
+  var nativeBtns = [
+    doc.querySelector('[data-testid="stSidebarNavCollapseButton"]'),
+    doc.querySelector('[data-testid="collapsedControl"] button'),
+    doc.querySelector('[data-testid="stSidebarCollapsedControl"] button'),
+    doc.querySelector('[data-testid="stSidebarNavCollapseIcon"]'),
+    doc.querySelector('button[aria-label="Close sidebar"]'),
+    doc.querySelector('button[aria-label="Open sidebar"]'),
+    doc.querySelector('button[data-testid="baseButton-headerNoPadding"]'),
+  ].filter(Boolean);
+
+  if (nativeBtns.length > 0) {
+    nativeBtns[0].click();
+    return;
+  }
+
+  // Fallback: manipulasi sidebar langsung
+  var sidebar = doc.querySelector('[data-testid="stSidebar"]');
+  if (!sidebar) return;
+
+  var isOpen = sidebar.offsetWidth > 50;
+  if (isOpen) {
+    sidebar.style.transition = 'margin-left 0.25s ease';
+    sidebar.style.marginLeft  = '-' + sidebar.offsetWidth + 'px';
+    setTimeout(function() {
+      sidebar.style.display = 'none';
+      sidebar.style.marginLeft = '';
+    }, 260);
+  } else {
+    sidebar.style.display = '';
+    sidebar.style.marginLeft = '-' + sidebar.offsetWidth + 'px';
+    requestAnimationFrame(function() {
+      sidebar.style.transition = 'margin-left 0.25s ease';
+      sidebar.style.marginLeft = '0px';
+    });
+  }
+});
+</script>
+""", height=0, scrolling=False)
+
 
 st.markdown("""
 <style>
@@ -88,28 +165,7 @@ p, span, label, div { color: #F0F2F8 !important; }
 .mini-stat-bar   { height:3px; background:#252A38; border-radius:2px; margin-top:10px; overflow:hidden; }
 .mini-stat-fill  { height:100%; width:87.4%; border-radius:2px; background:#F97316; }
 
-/* ── Custom sidebar toggle button ── */
-#sidebar-toggle-btn {
-    position: fixed;
-    top: 14px;
-    left: 14px;
-    z-index: 9999;
-    width: 36px;
-    height: 36px;
-    background: #191D27;
-    border: 1px solid #252A38;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background .2s, border-color .2s;
-    flex-direction: column;
-    gap: 4px;
-    padding: 9px 8px;
-}
-#sidebar-toggle-btn:hover { background: #252A38; border-color: #3D4557; }
-#sidebar-toggle-btn .bar  { width: 16px; height: 2px; background: #F97316; border-radius: 2px; transition: all .25s; }
+/* toggle button styling handled via components */
 
 /* ── Page header ── */
 .crumb    { font-size:11px !important; color:#3D4557 !important; margin-bottom:6px; letter-spacing:.04em; }
@@ -232,62 +288,7 @@ input[type="number"]          { color:#F0F2F8 !important; }
 .step-desc  { font-size:13px !important; color:#7A8499 !important; line-height:1.6 !important; }
 </style>
 
-<!-- Custom sidebar toggle button -->
-<div id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Buka / tutup sidebar">
-  <div class="bar"></div>
-  <div class="bar"></div>
-  <div class="bar"></div>
-</div>
 
-<script>
-function toggleSidebar() {
-    // Streamlit menyimpan sidebar dalam beberapa selector berbeda antar versi
-    const selectors = [
-        '[data-testid="stSidebar"]',
-        'section[data-testid="stSidebar"]',
-        '.css-1d391kg',
-        '.css-17eq0hr'
-    ];
-    let sidebar = null;
-    for (const sel of selectors) {
-        sidebar = window.parent.document.querySelector(sel);
-        if (sidebar) break;
-    }
-    if (!sidebar) return;
-
-    const isCollapsed = sidebar.style.display === 'none' || sidebar.classList.contains('hidden') || sidebar.offsetWidth < 10;
-
-    if (isCollapsed) {
-        sidebar.style.display = '';
-        sidebar.style.width   = '';
-        sidebar.style.minWidth = '';
-        sidebar.style.transform = 'translateX(0)';
-        sidebar.style.transition = 'transform 0.25s ease';
-    } else {
-        sidebar.style.transform = 'translateX(-110%)';
-        sidebar.style.transition = 'transform 0.25s ease';
-        setTimeout(() => { sidebar.style.display = 'none'; }, 250);
-    }
-}
-
-// Alternatif: klik tombol toggle bawaan Streamlit jika ada
-function clickNativeToggle() {
-    const doc = window.parent.document;
-    const btns = [
-        doc.querySelector('[data-testid="collapsedControl"] button'),
-        doc.querySelector('[data-testid="stSidebarCollapsedControl"] button'),
-        doc.querySelector('button[kind="header"]'),
-    ].filter(Boolean);
-    if (btns.length > 0) { btns[0].click(); return true; }
-    return false;
-}
-
-document.getElementById('sidebar-toggle-btn').addEventListener('click', function(e) {
-    e.stopPropagation();
-    // Coba native toggle dulu, fallback ke manual
-    if (!clickNativeToggle()) toggleSidebar();
-});
-</script>
 """, unsafe_allow_html=True)
 
 
